@@ -17,5 +17,5 @@ Including another URLconf
 from django.urls import path, include
 from .views import homepage
 urlpatterns = [
-    path("", homepage.home, name="homepage"),
+    path("", homepage.HomePageView.as_view(), name="homepage"),
 ]
