@@ -1,5 +1,5 @@
 {% extends 'courses/base.html' %}
-{% load course_custom_tags %}
+{% load custom_tags %}
 {%block title%}Courses
 {% endblock %}
 
@@ -34,7 +34,7 @@
                 </div>
 
                 <div class="card-footer p-0">
-                    {% is_enrolled request course as enrolled %}
+                    {% comment %} {% is_enrolled request course as enrolled %} {% endcomment %}
 
 
                     <div class="row no-gutters">
