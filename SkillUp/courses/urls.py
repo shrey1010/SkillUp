@@ -15,11 +15,13 @@ Including another URLconf
 """
 
 from django.urls import path, include
-from .views import homepage
+from .views import HomePageView, coursePage
 from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
-    path("", homepage.HomePageView.as_view(), name="homepage"),
+    path('', HomePageView.as_view(), name='home'),
+    path('course/<str:slug>', coursePage, name='coursepage'),
+
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
