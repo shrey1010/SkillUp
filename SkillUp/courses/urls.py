@@ -15,13 +15,17 @@ Including another URLconf
 """
 
 from django.urls import path, include
-from .views import HomePageView, coursePage
+from .views import HomePageView, coursePage, SignupView, LoginView, signout  #, MyCoursesList
 from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
     path('', HomePageView.as_view(), name='home'),
     path('course/<str:slug>', coursePage, name='coursepage'),
+    path('logout', signout, name='logout'),
+    # path('my-courses', MyCoursesList.as_view(), name='my-courses'),
+    path('signup', SignupView.as_view(), name='signup'),
+    path('login', LoginView.as_view(), name='login'),
 
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
