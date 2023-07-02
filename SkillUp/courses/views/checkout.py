@@ -42,20 +42,7 @@ def checkout(request, slug):
         }
         reciept = f"shreyshukla-{int(time())}"
         
-        order = client.order.create(
-            {'receipt': reciept,
-             'notes': notes,
-             'amount': amount,
-             'currency': currency
-             }
-        )
-
-        payment = Payment()
-        payment.user = user    
-        payment.course = course
-        payment.order_id = order.get('id')
-        payment.save()
-
+        
     context = {
         "course": course,
         "order": order,
@@ -66,31 +53,31 @@ def checkout(request, slug):
     return render(request, template_name="courses/check_out.html", context=context)
 
 
-# @login_required(login_url='/login')
-# @csrf_exempt
-# def verifyPayment(request):
-#     if request.method == "POST":
-#         data = request.POST
-#         context = {}
-#         print(data)
-#         try:
-#             client.utility.verify_payment_signature(data)
-#             razorpay_order_id = data['razorpay_order_id']
-#             razorpay_payment_id = data['razorpay_payment_id']
+@login_required(login_url='/login')
+@csrf_exempt
+def verifyPayment(request):
+    if request.method == "POST":
+        data = request.POST
+        context = {}
+        print(data)
+        try:
+            client.utility.verify_payment_signature(data)
+            razorpay_order_id = data['razorpay_order_id']
+            razorpay_payment_id = data['razorpay_payment_id']
 
-#             payment = Payment.objects.get(order_id=razorpay_order_id)
-#             payment.payment_id = razorpay_payment_id
-#             payment.status = True
+            payment = Payment.objects.get(order_id=razorpay_order_id)
+            payment.payment_id = razorpay_payment_id
+            payment.status = True
 
-#             userCourse = UserCourse(user=payment.user, course=payment.course)
-#             userCourse.save()
+            userCourse = UserCourse(user=payment.user, course=payment.course)
+            userCourse.save()
 
-#             print("UserCourse",  userCourse.id)
+            print("UserCourse",  userCourse.id)
 
-#             payment.user_course = userCourse
-#             payment.save()
+            payment.user_course = userCourse
+            payment.save()
 
-#             return redirect('my-courses')
+            return redirect('my-courses')
 
-#         except:
-#             return HttpResponse("Invalid Payment Details")
+        except:
+            return HttpResponse("Invalid Payment Details")
