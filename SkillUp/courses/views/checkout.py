@@ -42,7 +42,20 @@ def checkout(request, slug):
         }
         reciept = f"shreyshukla-{int(time())}"
         
-        
+        order = client.order.create(
+            {'receipt': reciept,
+             'notes': notes,
+             'amount': amount,
+             'currency': currency
+             }
+        )
+
+        payment = Payment()
+        payment.user = user    
+        payment.course = course
+        payment.order_id = order.get('id')
+        payment.save()
+
     context = {
         "course": course,
         "order": order,
