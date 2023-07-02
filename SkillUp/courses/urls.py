@@ -15,7 +15,7 @@ Including another URLconf
 """
 
 from django.urls import path, include
-from .views import HomePageView, coursePage, SignupView, LoginView, signout  #, MyCoursesList
+from .views import HomePageView, coursePage, SignupView, LoginView, signout,checkout  #, MyCoursesList
 from django.conf.urls.static import static
 from django.conf import settings
 
@@ -26,6 +26,7 @@ urlpatterns = [
     # path('my-courses', MyCoursesList.as_view(), name='my-courses'),
     path('signup', SignupView.as_view(), name='signup'),
     path('login', LoginView.as_view(), name='login'),
+    path('check-out/<str:slug>', checkout, name='check-out'),
 
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

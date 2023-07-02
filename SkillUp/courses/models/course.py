@@ -27,7 +27,7 @@ class CourseProperty(models.Model):
 class Tag(CourseProperty):
     pass
 
-class Prerequisites(CourseProperty):
+class Prerequisite(CourseProperty):
     pass
 
 class Learning(CourseProperty):

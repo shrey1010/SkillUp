@@ -60,7 +60,7 @@ Courses
                 <div class="col-3">
                     <ul id='video_list' class="list-group overflow-y-scroll">
 
-                        {% comment %} {% is_enrolled request course as enrolled %} {% endcomment %}
+                        {% is_enrolled request course as enrolled %}
                         {% for v in videos %}
                             <li
                              class="list-group-item {% if v == video %} active-video {% endif %} ">

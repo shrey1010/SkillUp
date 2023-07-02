@@ -1,5 +1,7 @@
 from django.contrib import admin
-from .models.course import Course,Tag,Prerequisites,Learning
+from .models.course import Course,Tag,Prerequisite,Learning
+from .models.payment import Payment
+from .models.user_course import UserCourse
 from.models.video import Video
 # Register your models here.
 
@@ -8,7 +10,7 @@ class TagAdmin(admin.TabularInline):
 
 
 class PrerequisiteAdmin(admin.TabularInline):
-    model = Prerequisites
+    model = Prerequisite
 
 
 class LearningAdmin(admin.TabularInline):
@@ -24,3 +26,6 @@ class CourseAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Course,CourseAdmin)
+admin.site.register(Video)
+admin.site.register(Payment)
+admin.site.register(UserCourse)
