@@ -21,8 +21,13 @@ def coursePage(request, slug):
     serial_number = request.GET.get('lecture')
     videos = course.video_set.all().order_by("serial_number")
 
+    next_lecture = 2
     if serial_number is None:
         serial_number = 1
+    else:
+        next_lecture = int(serial_number)+1
+        if len(videos)<next_lecture:
+            next_lecture = None
 
     video = Video.objects.get(serial_number=serial_number, course=course)
 
@@ -40,6 +45,7 @@ def coursePage(request, slug):
     context = {
         "course": course,
         "video": video,
-        'videos': videos
+        'videos': videos,
+        'next_lecture': next_lecture
     }
     return render(request, template_name="courses/course_page.html", context=context)
