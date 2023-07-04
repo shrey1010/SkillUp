@@ -42,7 +42,7 @@ def checkout(request, slug):
             "email": user.email,
             "name": f'{user.first_name} {user.last_name}'
         }
-        reciept = f"codewithvirendra-{int(time())}"
+        reciept = f"shreyshukla-{int(time())}"
         order = client.order.create(
             {'receipt': reciept,
              'notes': notes,

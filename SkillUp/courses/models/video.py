@@ -9,3 +9,6 @@ class Video(models.Model):
     video_id = models.CharField(max_length=50,null = False)
     is_preview = models.BooleanField(default=False)
 
+    def __str__(self) -> str:
+        return f"{self.title}+{self.course}"
+
