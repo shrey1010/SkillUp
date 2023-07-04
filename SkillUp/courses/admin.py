@@ -5,6 +5,7 @@ from .models.payment import Payment
 from .models.user_course import UserCourse
 from.models.video import Video
 from courses.templatetags import custom_tags
+from .models.coupons import Coupon
 # Register your models here.
 
 class TagAdmin(admin.TabularInline):
@@ -71,7 +72,12 @@ class UserCourseAdmin(admin.ModelAdmin):
     get_user.short_description = "User"
 
 
+class CouponAdmin(admin.ModelAdmin):
+    model = Coupon
+    list_display = ["code","course","discount","is_active"]
+
 admin.site.register(Course,CourseAdmin)
 admin.site.register(Video)
+admin.site.register(Coupon,CouponAdmin)
 admin.site.register(Payment,Payment_admin)
 admin.site.register(UserCourse,UserCourseAdmin)

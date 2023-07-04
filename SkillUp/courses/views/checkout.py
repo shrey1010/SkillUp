@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from courses.models import Course, Video, Payment, UserCourse
+from courses.models import Course, Video, Payment, UserCourse,Coupon
 from django.shortcuts import HttpResponse
 # Create your views here.
 from django.views.decorators.csrf import csrf_exempt
@@ -16,6 +16,8 @@ def checkout(request, slug):
     course = Course.objects.get(slug=slug)
     user = request.user
     action = request.GET.get('action')
+    
+    
     order = None
     payment = None
     error = None
@@ -29,6 +31,16 @@ def checkout(request, slug):
         amount = int(
             (course.price - (course.price * course.discount * 0.01)) * 100)
    # if ammount is zero dont create paymenty , only save emrollment obbect
+    coupon_code_messege = None
+    couponcode = request.GET.get('couponcode')
+    coupon = None
+    if couponcode :
+        try:
+            coupon = Coupon.objects.get(code=couponcode, course=course)
+            amount = int((course.price - (course.price * coupon.discount * 0.01)) * 100)
+        except :
+           coupon_code_messege= "coupon code Invalid"
+
 
     if amount == 0:
         userCourse = UserCourse(user=user, course=course)
@@ -62,7 +74,9 @@ def checkout(request, slug):
         "order": order,
         "payment": payment,
         "user": user,
-        "error": error
+        "error": error,
+        "coupon": coupon,
+        "error": coupon_code_messege,
     }
     return render(request, template_name="courses/check_out.html", context=context)
 

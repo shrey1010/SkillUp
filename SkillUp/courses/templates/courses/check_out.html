@@ -18,6 +18,19 @@ Signup
                 <div class="card-body">
                     <h5 class="card-title">{{course.name}}</h5>
                     <p class="card-text m-0 p-0">
+
+                    {%if coupon%}
+                        Save {{coupon.discount}}%
+                        <br>
+                        <span class="price">
+                            <del>{{course.price|rupee}}</del>
+                            &nbsp;
+
+                            <span>{% cal_sellprice course.price coupon.discount as value %} {{value|rupee}}</span>
+
+                            
+                        </span>
+                    {%else%}
                         Save {{course.discount}}%
                         <br>
                         <span class="price">
@@ -25,7 +38,10 @@ Signup
                             &nbsp;
 
                             <span>{% cal_sellprice course.price course.discount as value %} {{value|rupee}}</span>
+
+                            
                         </span>
+                    {%endif%}
 
                     </p>
                 </div>
@@ -39,13 +55,45 @@ Signup
             <div>
                 <p class="display-5">{{course.name}}</p>
                 <hr>
-                <p class="display-5">Payable Amount : <b>{% cal_sellprice course.price course.discount as value %}
-                        {{value|rupee}}</b></p>
-                <a class="btn btn-light border" href="?action=create_payment">Continue to Payment</a>
+                {%if coupon%}
+                    <p class="display-5">Payable Amount : <b>{% cal_sellprice course.price coupon.discount as value %}{{value|rupee}}</b></p>
+                        <div>
+                            <a class="btn btn-light border" href="?action=create_payment&couponcode={{coupon.code}}">Continue to Payment</a>
+                        </div>
+                {%else%}
+                        <p class="display-5">Payable Amount : <b>{% cal_sellprice course.price course.discount as value %}{{value|rupee}}</b></p>
+                            <div>
+                            <a class="btn btn-light border" href="?action=create_payment">Continue to Payment</a>
+                        </div>
+                {%endif%}
+                        
+                <br>
+                    <div class="border p-5 rounded border-primary">
+                        {%if error %}
+                                <div class="alert alert-info">
+                                    {{error}}
+                                </div>
+                        {%else%}
+                                 <p class="alert alert-light border-success">Coupon Code Applied ! You have got {{coupon.discount}} % discount </p>
+                        {%endif%}
+                        <p> Have a Coupon Code ? </p>
+                        <form action="" method="get">
+                                <div class="col-lg-5 form-group">
+                                    <input type="text" name="couponcode" class="form-control" placeholder="Enter Coupon Code" id="">
+                                </div>
+                                 <div class ="form-group">
+                                    <input type="submit" value = "Apply" name="" class="btn btn-primary" id="">
+                                </div> 
+                        </form>
+                    </div>
+                    <br>
+                
             </div>
+            
         </div>
     </div>
 </div>
+
 
 {% if order is not None %}
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
