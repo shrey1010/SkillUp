@@ -9,6 +9,8 @@ from time import time
 
 import razorpay
 client = razorpay.Client(auth=(KEY_ID, KEY_SECRET))
+
+
 @login_required(login_url='/login')
 def checkout(request, slug):
     course = Course.objects.get(slug=slug)
@@ -40,8 +42,7 @@ def checkout(request, slug):
             "email": user.email,
             "name": f'{user.first_name} {user.last_name}'
         }
-        reciept = f"shreyshukla-{int(time())}"
-        
+        reciept = f"codewithvirendra-{int(time())}"
         order = client.order.create(
             {'receipt': reciept,
              'notes': notes,
@@ -51,7 +52,7 @@ def checkout(request, slug):
         )
 
         payment = Payment()
-        payment.user = user    
+        payment.user = user
         payment.course = course
         payment.order_id = order.get('id')
         payment.save()
@@ -66,7 +67,6 @@ def checkout(request, slug):
     return render(request, template_name="courses/check_out.html", context=context)
 
 
-@login_required(login_url='/login')
 @csrf_exempt
 def verifyPayment(request):
     if request.method == "POST":
@@ -94,3 +94,5 @@ def verifyPayment(request):
 
         except:
             return HttpResponse("Invalid Payment Details")
+        
+    return HttpResponse("Invalid Request Method")

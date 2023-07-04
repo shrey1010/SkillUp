@@ -1,11 +1,19 @@
 from django.shortcuts import render, redirect
-from courses.models import Course, Video#, UserCourse
+from courses.models import Course, Video, UserCourse
 from django.shortcuts import HttpResponse
 # Create your views here.
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView
 from django.utils.decorators import method_decorator
 
+
+@method_decorator(login_required(login_url='login'), name='dispatch')
+class MyCoursesList(ListView):
+    template_name = 'courses/my_courses.html'
+    context_object_name = 'user_courses'
+
+    def get_queryset(self):
+        return UserCourse.objects.filter(user=self.request.user)
 
 
 def coursePage(request, slug):
@@ -24,10 +32,10 @@ def coursePage(request, slug):
             return redirect("login")
         else:
             user = request.user
-            # try:
-            #     user_course = UserCourse.objects.get(user=user, course=course)
-            # except:
-            #     return redirect("check-out", slug=course.slug)
+            try:
+                user_course = UserCourse.objects.get(user=user, course=course)
+            except:
+                return redirect("check-out", slug=course.slug)
 
     context = {
         "course": course,
