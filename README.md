@@ -6,10 +6,10 @@ This Django application is a course marketplace platform, similar to Udemy, wher
 ### Admin Course Management
 Streamlined course management for admin users, allowing them to efficiently handle course details, such as prerequisites, essentials, and multiple videos.
 Comprehensive categorization and administration of courses through an intuitive admin dashboard.
-###Secure Authentication
+### Secure Authentication
 Robust authentication system that ensures the security of user accounts, enabling users to confidently sign up, log in, and maintain their credentials.
 Implementation of advanced authentication mechanisms to safeguard user data and transactional information.
-Course Listing and Enrollment
+### Course Listing and Enrollment
 Engaging home screen showcasing a wide array of courses through visually appealing HTML cards, enhancing the user browsing experience.
 Smooth enrollment process, enabling users to effortlessly enroll in free courses or preview paid courses before making a purchase decision.
 Seamlessly adding purchased courses to the user's account upon successful payment, granting immediate access to course content.
@@ -19,7 +19,7 @@ Support for various payment methods, offering users a convenient and trustworthy
 ### Video Player
 Custom-built media player designed to provide an immersive and user-friendly experience for playing video lectures within the application.
 Seamless integration with YouTube, dynamically fetching and delivering video lectures based on user preferences and course requirements.
-###Discount and Coupon Codes
+### Discount and Coupon Codes
 User-friendly discount system that allows users to apply coupon codes during the payment process, granting them access to exclusive discounts on paid courses.
 Accurate validation and application of coupon codes, ensuring transparent and fair pricing for users.
 
